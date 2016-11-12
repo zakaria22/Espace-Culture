@@ -1,0 +1,41 @@
+<div class="row">
+	<div class="col-md-4">
+		<%= image_tag @user.picture.url(:medium), class: "user-picture" %>
+		<% if user_signed_in? %>
+			<% if @user.id == current_user.id %>
+				<div class="user-profile">
+					<a href="/users/edit" class= "btn btn-custom">&nbsp;&nbsp;Modifier Votre Profile&nbsp;&nbsp;</a>
+				</div>
+			<% end %>
+		<% end %>
+	</div>
+
+	<div class="col-md-8">
+		<div class="book-info">
+			<h2 class="book-title"><%= @user.last_name.upcase %>&nbsp;&nbsp;&nbsp;<%= @user.first_name.capitalize %></h2>
+			
+			<h3 class="book-author"><b>Age :</b> <%= Time.now.utc.to_date.year - @user.birthday.year - (@user.birthday.to_date.change(:year => Time.now.utc.to_date.year) > Time.now.utc.to_date ? 1 : 0) %>
+			</h3>
+			<h3 class="book-author"><b>Bouquineur : </b> &nbsp;
+				<% if @user.read_more == true %>
+					Oui
+				<% else %>
+					Non
+				<% end %>
+			</h3>
+			<% if @user.average_movies != nil %>
+				<h3 class="book-author"><b> Nombre de film par semaine :</b> <%= @user.average_movies %> </h3> 
+			<% else %>
+				<h3 class="book-author"><b> Nombre de film par semaine :</b> 0 </h3> 
+			<% end %>
+			
+			<% if @user.about != nil %>
+				<h2 class="avg-rating"><b>A propos : </b></h2>
+				<p class="book-desc"><%= @user.about %></p>
+			<% end %>
+			<div align="center">
+				<a href="/cv/<%= @user.id %>" class= "btn btn-custom">&nbsp;&nbsp;CV&nbsp;&nbsp;</a>
+			</div>
+		</div>
+	</div>
+</div>

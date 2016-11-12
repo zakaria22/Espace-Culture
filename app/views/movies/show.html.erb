@@ -1,0 +1,64 @@
+<div class="row">
+	<div class="col-md-4">
+		<%= image_tag @movie.movie_img.url(:movie_index), class: "book-show" %>
+		<% if user_signed_in? %>
+			<% if @movie.user_id == current_user.id %>
+				<div class="admin-btn">
+					<div class="links btn-group">
+						<br/>
+						<%= link_to "Modifier", edit_movie_path(@movie) ,class: "btn btn-custom" %>
+						<%= link_to "Supprimer", movie_path(@movie), method: :delete, data: { confirm: "êtes-vous sûr ?"}, class: "btn btn-custom" %>
+					</div>
+				</div>					
+			<% end %>
+		<% end %>
+	</div>
+	<div class="col-md-8">
+		<div class="book-info">
+			<h2 class="book-title"><%= @movie.title %></h2> 
+			<h3 class="book-author">De : <%= @movie.mes %></h3>
+			<h3 class="book-author">Avec : <%= @movie.actors %></h3>
+			<h2 class="avg-rating">Moyenne des votes</h2>
+			<div class="average-review-rating" data-score=<%= @average_review %>></div>
+			<div class="number-of-reviews">Basé sur <%= @movie.comments.count %> Scores </div>
+			<p class="book-desc"><%= @movie.description %></p>
+			<div class="embed-container">  
+			  <%= embed(@movie.bd) %>
+			</div>
+			
+			<div class="reviews">
+				<h1>Commentaires</h1>
+				<%= render @movie.comments %>
+				<div>
+					<% if user_signed_in? %>
+						<%= link_to "Ajouter un Commentaire", new_movie_comment_path(@movie), class: "btn btn-custom" %>
+					<% end %>
+				</div>
+			</div>	
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<script>
+	$('.comment-rating').raty({
+		readOnly: true,
+		score: function(){
+			return $(this).attr('data-score');
+		},
+		path: '/assets/'
+	})
+</script>
+
+<script>
+	$('.average-review-rating').raty({
+		readOnly: true,
+		score: function(){
+			return $(this).attr('data-score');
+		},
+		path: '/assets/'
+	})
+</script>

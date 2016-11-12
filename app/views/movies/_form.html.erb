@@ -1,0 +1,10 @@
+<%= simple_form_for @movie do |f| %>
+  <%= select_tag(:moviecat_id, options_for_select(@categories), :prompt => "Choisir une catégorie") %><br/>
+  <%= f.input :title, label:"Titre" %>
+  <%= f.input :description %>
+  <%= f.input :actors, label:"Acteurs" %>
+  <%= f.input :mes, label:"Metteur en scene" %>
+  <%= f.input :bd, label:"Bande d'annonce" %>
+  <%= f.file_field :movie_img, label:"Image : " %><br/>
+  <%= f.button :submit,'Ajouter', :class => 'btn-custom2' %>
+<% end %>

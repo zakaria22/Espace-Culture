@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <%= image_tag @bar_chart %>
+    </div>
+    <div id="viz" class="col-md-6"></div>
+  </div><br/><br/>
+    <div class="row">
+    <div class="col-md-6 col-md-offset-3 book-info">
+      <h2 class="avg-rating">Pourcentage </h2>  
+      <h3 class="book-author">   des Gens aimeraient lire : <%= @persent.round(2) %>   </h3>
+      <h3 class="book-author">   des Gens n'aimeraient pas lire : <%= 100 - @persent.round(2) %>   </h3>
+    </div>
+  </div>
+  
+</div>
+
+
+<script>
+  var data = [
+  <% @user.each do |u| %>
+        {"year": 2016, "name":"<%= u.last_name %>", "value": <%= u.average_movies.to_i %>},
+    <% end %>
+    
+  ]
+  var visualization = d3plus.viz()
+    .container("#viz")
+    .data(data)
+    .type("box")
+    .id("name")
+    .x("year")
+    .y("value")
+    .time("year")
+    .ui([{ 
+        "label": "Visualization Type",
+        "method": "type", 
+        "value": ["scatter","box"]
+      }])
+    .width(400)
+    .height(400)
+    .draw()
+</script>

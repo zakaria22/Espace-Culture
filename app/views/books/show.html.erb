@@ -1,0 +1,56 @@
+<div class="row">
+	<div class="col-md-4">
+		<%= image_tag @book.book_img.url(:book_index), class: "book-show" %>
+		<% if user_signed_in? %>
+			<% if @book.user_id == current_user.id %>
+				<div class="admin-btn">
+					<div class="links btn-group">
+						<%= link_to "Modifier", edit_book_path(@book), class: "btn btn-custom" %>
+						<%= link_to "Supprimer", book_path(@book), method: :delete, data: { confirm: "êtes-vous sûr ?"}, class: "btn btn-custom" %>
+					</div>
+				</div>
+			<% end %>
+		<% end %>
+	</div>
+
+	<div class="col-md-8">
+		<div class="book-info">
+			<h2 class="book-title"><%= @book.title %></h2>
+			<h3 class="book-author">Auteur : <%= @book.author %></h3>
+			<h2 class="avg-rating">Moyenne des votes</h2>
+			<div class="average-review-rating" data-score=<%= @average_review %>></div>
+			<div class="number-of-reviews">Basé sur <%= @book.reviews.count %> Scores </div>
+			<p class="book-desc"><%= @book.description %></p>
+			<div class="reviews">
+				<h1>Commentaires</h1>
+				<%= render @book.reviews %>	
+				<div>
+					<% if user_signed_in? %>
+						<%= link_to "Ajouter un Commentaire", new_book_review_path(@book), class: "btn btn-custom" %>
+					<% end %>
+				</div>
+			</div>	
+		</div>
+	</div>
+</div>
+
+
+<script>
+	$('.review-rating').raty({
+		readOnly: true,
+		score: function(){
+			return $(this).attr('data-score');
+		},
+		path: '/assets/'
+	})
+</script>
+
+<script>
+	$('.average-review-rating').raty({
+		readOnly: true,
+		score: function(){
+			return $(this).attr('data-score');
+		},
+		path: '/assets/'
+	})
+</script>

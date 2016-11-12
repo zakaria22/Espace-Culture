@@ -1,0 +1,19 @@
+<div class="col-md-6 col-md-offset-3">
+	<div class="edit-review-form">
+		<h1>Modifier</h1>
+		<%= simple_form_for([@movie, @review]) do |f| %>
+			<div id="rating-form">
+				<label>Star</label>
+			</div>
+			<%= f.input :comment %>
+			<%= f.button :submit,'Modifier', :class => "btn-custom2" %>
+		<% end %>
+	</div>
+</div>
+
+<script>
+	$('#rating-form').raty({
+		path: '/assets/',
+		scoreName: 'comment[rating]'
+	});
+</script>

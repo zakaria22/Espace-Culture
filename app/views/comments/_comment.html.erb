@@ -1,0 +1,20 @@
+<div class="review">
+
+	<div class="comment-rating" data-score="<%= comment.rating %>">
+	
+	</div>
+	<a href="/users/<%= comment.user.id %>" >
+		<h2>
+			<%= image_tag comment.user.picture.url(:thumb) %>&nbsp;<%= comment.user.first_name %>&nbsp;<%= comment.user.last_name %>
+		</h2>
+	</a>
+	
+	<p class="review-comment"><%= comment.comment %></p>
+
+	<% if user_signed_in? %>
+		<% if comment.user_id == current_user.id %>
+			<%= link_to "Modifier", edit_movie_comment_path(comment.movie, comment), class: "btn btn-custom" %>
+			<%= link_to "Supprimer", movie_comment_path(comment.movie, comment),method: :delete, data:{confirm: "êtes-vous sûr?"}, class: "btn btn-custom" %>
+		<% end %>
+	<% end %>
+</div>		
